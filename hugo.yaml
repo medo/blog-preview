@@ -1,6 +1,6 @@
 baseURL: "https://farghal.ai/"
 locale: "en-us"
-title: "farghal.ai"
+title: "medo's notes"
 theme: ["PaperMod"]
 
 enableRobotsTXT: true
@@ -36,8 +36,8 @@ markup:
 
 params:
   env: production
-  title: "farghal.ai"
-  description: "Personal blog."
+  title: "medo's notes"
+  description: "Notes on technology, science, and human-first AI."
   author: "Mohamed Farghal"
 
   defaultTheme: auto
@@ -64,10 +64,10 @@ params:
     disableHLJS: true
 
   label:
-    text: "farghal.ai"
+    text: "medo's notes"
 
   homeInfoParams:
-    Title: "farghal.ai"
+    Title: "medo's notes"
     Content: ""
 
   # Add your social links here when ready:
