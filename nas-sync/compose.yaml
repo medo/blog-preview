@@ -1,0 +1,20 @@
+services:
+  blog-sync:
+    image: alpine:3.21
+    container_name: medo-blog-sync
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Berlin
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - SYNC_INTERVAL=3600
+    volumes:
+      # Mount your UGREEN NAS Obsidian blog folder READ-ONLY:
+      # Update the left side to match your actual UGREEN NAS path
+      - /volume1/Notes/blog:/blog-src:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        apk add --no-cache bash git rsync python3 github-cli ca-certificates tzdata curl >/dev/null
+        curl -fsSL https://raw.githubusercontent.com/medo/medo.github.io/main/nas-sync/sync.sh -o /usr/local/bin/sync.sh
+        chmod +x /usr/local/bin/sync.sh
+        exec /usr/local/bin/sync.sh
