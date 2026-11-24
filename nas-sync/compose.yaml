@@ -9,7 +9,7 @@ services:
       - SYNC_INTERVAL=3600
     volumes:
       # Mount your UGREEN NAS Obsidian blog folder READ-ONLY:
-      - /home/farghal/Notes/blog:/blog-src:ro
+      - /home/farghal/Notes/Notes/blog:/blog-src:ro
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
