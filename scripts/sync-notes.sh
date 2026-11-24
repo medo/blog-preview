@@ -30,7 +30,7 @@ git_gh() {
 
 # Fetch latest remote refs
 cd "$REPO_DIR"
-git_gh fetch origin --quiet
+git_gh fetch origin --quiet --prune
 
 # Ensure staging worktree exists and tracks staging branch
 if [[ ! -d "$WORKTREE_DIR" ]]; then
