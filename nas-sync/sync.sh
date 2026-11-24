@@ -84,13 +84,20 @@ for md in posts_dir.rglob("*.md"):
 
     # If the note has no YAML/TOML frontmatter, generate minimal Hugo frontmatter
     stripped = updated.lstrip()
+    title = md.parent.name if md.stem.lower() == "index" else md.stem
+    title_escaped = title.replace('"', '\\"')
+    mtime = datetime.datetime.fromtimestamp(md.stat().st_mtime, datetime.timezone.utc).astimezone()
+    date_str = mtime.isoformat(timespec="seconds")
+
     if not (stripped.startswith("---") or stripped.startswith("+++")):
-        title = md.parent.name if md.stem.lower() == "index" else md.stem
-        title_escaped = title.replace('"', '\\"')
-        mtime = datetime.datetime.fromtimestamp(md.stat().st_mtime, datetime.timezone.utc).astimezone()
-        date_str = mtime.isoformat(timespec="seconds")
         frontmatter = f'---\ntitle: "{title_escaped}"\ndate: {date_str}\ndraft: false\n---\n\n'
         updated = frontmatter + stripped
+    else:
+        # Resolve unexpanded Obsidian template placeholders if pasted manually
+        updated = updated.replace("{{title}}", title_escaped)
+        updated = updated.replace("{{date}}T{{time}}+01:00", date_str)
+        updated = updated.replace("{{date}}", mtime.strftime("%Y-%m-%d"))
+        updated = updated.replace("{{time}}", mtime.strftime("%H:%M:%S"))
 
     if updated != text:
         md.write_text(updated, encoding="utf-8")
