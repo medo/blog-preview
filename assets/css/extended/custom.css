@@ -1,0 +1,185 @@
+/* Minimal, Lil'Log-inspired editorial polish for PaperMod */
+
+:root {
+  --main-width: 740px;
+  --nav-width: 960px;
+  --gap: 24px;
+  --content-gap: 22px;
+  --radius: 8px;
+
+  /* Crisp light palette */
+  --theme: #ffffff;
+  --entry: #ffffff;
+  --primary: #1a1a1a;
+  --secondary: #666666;
+  --tertiary: #d8d8d8;
+  --content: #222222;
+  --code-bg: #f6f6f7;
+  --code-block-bg: #1e1f24;
+  --border: #eaeaea;
+}
+
+:root[data-theme="dark"] {
+  --theme: #191a1c;
+  --entry: #222327;
+  --primary: #e6e6e8;
+  --secondary: #9a9ba0;
+  --tertiary: #3a3b40;
+  --content: #d0d1d5;
+  --code-bg: #2a2b30;
+  --code-block-bg: #141518;
+  --border: #2e2f34;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Header & Navigation */
+.header {
+  border-bottom: 1px solid var(--border);
+}
+
+.nav {
+  line-height: 64px;
+}
+
+.logo a {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+#menu a {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--secondary);
+  transition: color 0.15s ease;
+}
+
+#menu a:hover,
+#menu .active {
+  color: var(--primary);
+}
+
+#menu .active {
+  font-weight: 600;
+  border-bottom: 2px solid var(--primary);
+}
+
+/* Home Info Banner */
+.first-entry.home-info {
+  min-height: auto;
+  margin: 28px 0 36px 0;
+  padding: 0;
+}
+
+.home-info .entry-header h1 {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.home-info .entry-content {
+  margin: 12px 0 16px 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--secondary);
+}
+
+/* Post list cards */
+.post-entry {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.post-entry:hover {
+  border-color: var(--tertiary);
+}
+
+.entry-header h2 {
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+
+.entry-content {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--secondary);
+}
+
+.entry-footer {
+  font-size: 13px;
+  color: var(--secondary);
+}
+
+/* Article reading typography */
+.post-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.post-content {
+  font-size: 16.5px;
+  line-height: 1.75;
+}
+
+.post-content h2 {
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  margin-top: 2.2em;
+}
+
+.post-content h3 {
+  font-size: 19px;
+  font-weight: 600;
+  margin-top: 1.8em;
+}
+
+.post-content a {
+  box-shadow: 0 1px 0 var(--tertiary);
+  transition: box-shadow 0.15s ease;
+}
+
+.post-content a:hover {
+  box-shadow: 0 1px 0 var(--primary);
+}
+
+.post-content code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
+  font-size: 0.85em;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.post-content pre code {
+  font-size: 0.85em;
+  line-height: 1.6;
+  padding: 0;
+}
+
+.post-content blockquote {
+  border-inline-start: 3px solid var(--tertiary);
+  color: var(--secondary);
+}
+
+/* Footer */
+.footer {
+  font-size: 13px;
+  color: var(--secondary);
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
