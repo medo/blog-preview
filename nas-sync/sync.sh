@@ -69,9 +69,9 @@ sync_once() {
     --exclude='*.tmp' \
     "$BLOG_SRC/" "$WORK_DIR/content/posts/"
 
-  # Convert Obsidian ![[image.png]] or ![[image.png|alt]] embeds to standard Markdown
+  # Convert Obsidian ![[image.png]] embeds and auto-inject Hugo frontmatter if missing
   python3 - "$WORK_DIR/content/posts" <<'PY'
-import pathlib, re, sys
+import datetime, pathlib, re, sys
 
 posts_dir = pathlib.Path(sys.argv[1])
 pattern = re.compile(r'!\[\[([^|\]]+?)(?:\|([^\]]+))?\]\]')
@@ -81,6 +81,17 @@ for md in posts_dir.rglob("*.md"):
         continue
     text = md.read_text(encoding="utf-8")
     updated = pattern.sub(lambda m: f"![{m.group(2) or ''}]({m.group(1)})", text)
+
+    # If the note has no YAML/TOML frontmatter, generate minimal Hugo frontmatter
+    stripped = updated.lstrip()
+    if not (stripped.startswith("---") or stripped.startswith("+++")):
+        title = md.parent.name if md.stem.lower() == "index" else md.stem
+        title_escaped = title.replace('"', '\\"')
+        mtime = datetime.datetime.fromtimestamp(md.stat().st_mtime, datetime.timezone.utc).astimezone()
+        date_str = mtime.isoformat(timespec="seconds")
+        frontmatter = f'---\ntitle: "{title_escaped}"\ndate: {date_str}\ndraft: false\n---\n\n'
+        updated = frontmatter + stripped
+
     if updated != text:
         md.write_text(updated, encoding="utf-8")
 PY
